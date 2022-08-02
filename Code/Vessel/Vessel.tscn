@@ -1,0 +1,38 @@
+[gd_scene load_steps=6 format=2]
+
+[ext_resource path="res://Vessel/assets/highlights.tres" type="Material" id=1]
+[ext_resource path="res://Vessel/assets/body.tres" type="Material" id=2]
+
+[sub_resource type="CubeMesh" id=2]
+
+[sub_resource type="PrismMesh" id=3]
+left_to_right = -0.1
+
+[sub_resource type="BoxShape" id=1]
+extents = Vector3( 0.860163, 0.518188, 1.71628 )
+
+[node name="Vessel" type="Area"]
+
+[node name="Boat" type="Spatial" parent="."]
+
+[node name="Body" type="MeshInstance" parent="Boat"]
+transform = Transform( 0.591318, 0, 0, 0, 0.308334, 0, 0, 0, 0.806197, 3.37711e-10, 0.429997, 0.334967 )
+mesh = SubResource( 2 )
+skeleton = NodePath("../..")
+material/0 = ExtResource( 2 )
+
+[node name="Body2" type="MeshInstance" parent="Boat"]
+transform = Transform( 2.58473e-08, -2.31692e-15, -0.806197, -8.92865e-08, -0.351036, -3.76141e-22, -0.591318, 5.3005e-08, -3.524e-08, 1.70145e-08, 0.440773, -1.02632 )
+mesh = SubResource( 3 )
+skeleton = NodePath("../..")
+material/0 = ExtResource( 1 )
+
+[node name="Body3" type="MeshInstance" parent="Boat"]
+transform = Transform( 4.47582e-08, 2.70248e-08, 0.768535, -8.95164e-08, 0.309128, -6.71875e-08, -0.59284, -4.6677e-08, 5.80228e-08, -1.09764e-08, 0.916313, 0.835748 )
+mesh = SubResource( 3 )
+skeleton = NodePath("../..")
+material/0 = ExtResource( 1 )
+
+[node name="CollisionShape" type="CollisionShape" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.601262, 0 )
+shape = SubResource( 1 )

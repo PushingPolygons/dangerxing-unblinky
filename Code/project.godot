@@ -8,6 +8,28 @@
 
 config_version=4
 
+_global_script_classes=[ {
+"base": "Spatial",
+"class": "Lane",
+"language": "GDScript",
+"path": "res://Lane/Lane.gd"
+}, {
+"base": "Area",
+"class": "Player",
+"language": "GDScript",
+"path": "res://Player/Player.gd"
+}, {
+"base": "Area",
+"class": "River",
+"language": "GDScript",
+"path": "res://River/River.gd"
+} ]
+_global_script_class_icons={
+"Lane": "",
+"Player": "",
+"River": ""
+}
+
 [application]
 
 config/name="Danger X-ing"
