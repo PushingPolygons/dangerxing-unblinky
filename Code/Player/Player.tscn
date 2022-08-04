@@ -61,8 +61,8 @@ material/0 = ExtResource( 2 )
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.94634, 0 )
 shape = SubResource( 2 )
 
-[node name="Move_0" type="AudioStreamPlayer" parent="."]
+[node name="move_0" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 5 )
 
-[node name="Move_1" type="AudioStreamPlayer" parent="."]
+[node name="move_1" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 6 )
