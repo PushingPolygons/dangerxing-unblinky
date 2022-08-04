@@ -1,7 +1,6 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://Main/Main.gd" type="Script" id=1]
-[ext_resource path="res://Player/Player.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Lane/Lane.tscn" type="PackedScene" id=3]
 [ext_resource path="res://Vessel/Vessel.tscn" type="PackedScene" id=4]
 [ext_resource path="res://Goal/Goal.tscn" type="PackedScene" id=5]
@@ -31,8 +30,6 @@ shadow_enabled = true
 [node name="OmniLight" type="OmniLight" parent="LCA"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -9.91644, 3.69432, -5.27409 )
 omni_range = 20.0766
-
-[node name="Player" parent="." instance=ExtResource( 2 )]
 
 [node name="Lane2" parent="." instance=ExtResource( 3 )]
 transform = Transform( -4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -0.477085, 0, -14.6957 )

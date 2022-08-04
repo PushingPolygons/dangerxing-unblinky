@@ -1,17 +1,22 @@
 extends Area
 class_name Player
 
-var speed = 2.0
+# Asset Loading.
 var movement_audio : Array
 var death_audio : Array
 var goal_audio : Array
+
+# Logic
+var speed = 2.0
+var lives = 4 # Decrement on Player Spawn.
+var offset_ui = 200 # Pixels.
+var offset_3d = 3 # Meters.
 
 
 func _ready():
 	movement_audio.append($move_0)
 	movement_audio.append($move_1)
-	
-	#death_audio.append($move_1)
+	UpdateLives(-1)
 
 
 func _process(delta):
@@ -36,7 +41,40 @@ func _process(delta):
 		PlayRandomSound(movement_audio)
 
 
+func SetPositionUI(player_count):
+	$UI.rect_position.x += player_count * offset_ui
+
+
+func SetPosition3D(player_count):
+	translation.x += player_count * offset_3d
+
+
+func UpdateLives(value):
+	lives += value
+	$UI/Label.text = str(lives)
+	if lives <= 0:
+		queue_free()
+
+
 func PlayRandomSound(array):
 	var rando = randi() % array.size()
 	array[rando].play()
 	print(rando)
+
+
+func _on_Player_area_entered(area):
+	if area is Vehicle:
+		print("Hey a car hit me.")
+		UpdateLives(-1)
+	
+	if area is Vessel:
+		print("Riding a boat.")
+		# TODO: Vessel list
+		# Reparent to boat.
+		# or update positon to boat.
+	
+	if area is Goal:
+		print("Landed on a goal.")
+		# TODO:
+		# Ends somehow.
+		# tell main that one of our gaols is complete.

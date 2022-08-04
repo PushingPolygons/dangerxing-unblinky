@@ -1,7 +1,8 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://Vessel/assets/highlights.tres" type="Material" id=1]
 [ext_resource path="res://Vessel/assets/body.tres" type="Material" id=2]
+[ext_resource path="res://Vessel/Vessel.gd" type="Script" id=3]
 
 [sub_resource type="CubeMesh" id=2]
 
@@ -12,6 +13,7 @@ left_to_right = -0.1
 extents = Vector3( 0.860163, 0.518188, 1.71628 )
 
 [node name="Vessel" type="Area"]
+script = ExtResource( 3 )
 
 [node name="Boat" type="Spatial" parent="."]
 
