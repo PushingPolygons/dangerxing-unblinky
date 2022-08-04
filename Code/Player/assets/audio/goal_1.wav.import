@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/goal_1.wav-f3a87c6f680be57efc781c21db457fc1.sample"
+
+[deps]
+
+source_file="res://Player/assets/audio/goal_1.wav"
+dest_files=[ "res://.import/goal_1.wav-f3a87c6f680be57efc781c21db457fc1.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop=false
+compress/mode=0

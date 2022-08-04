@@ -1,9 +1,11 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://Player/Player.gd" type="Script" id=1]
-[ext_resource path="res://Player/assets/feathers.tres" type="Material" id=2]
-[ext_resource path="res://Player/assets/beak.tres" type="Material" id=3]
-[ext_resource path="res://Player/assets/tail.tres" type="Material" id=4]
+[ext_resource path="res://Player/assets/materials/feathers.tres" type="Material" id=2]
+[ext_resource path="res://Player/assets/materials/beak.tres" type="Material" id=3]
+[ext_resource path="res://Player/assets/materials/tail.tres" type="Material" id=4]
+[ext_resource path="res://Player/assets/audio/player_move_0.wav" type="AudioStream" id=5]
+[ext_resource path="res://Player/assets/audio/player_move_1.wav" type="AudioStream" id=6]
 
 [sub_resource type="CubeMesh" id=1]
 
@@ -58,3 +60,9 @@ material/0 = ExtResource( 2 )
 [node name="CollisionShape" type="CollisionShape" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.94634, 0 )
 shape = SubResource( 2 )
+
+[node name="Move_0" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 5 )
+
+[node name="Move_1" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 6 )
