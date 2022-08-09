@@ -1,11 +1,10 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://Main/Main.gd" type="Script" id=1]
 [ext_resource path="res://Lane/Lane.tscn" type="PackedScene" id=3]
 [ext_resource path="res://Vessel/Vessel.tscn" type="PackedScene" id=4]
 [ext_resource path="res://Goal/Goal.tscn" type="PackedScene" id=5]
 [ext_resource path="res://River/River.tscn" type="PackedScene" id=6]
-[ext_resource path="res://Vehicle/Vehicle.tscn" type="PackedScene" id=7]
 
 [sub_resource type="CubeMesh" id=1]
 
@@ -32,7 +31,9 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -9.91644, 3.69432, -5.27409 )
 omni_range = 20.0766
 
 [node name="Lane2" parent="." instance=ExtResource( 3 )]
-transform = Transform( -4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -0.477085, 0, -14.6957 )
+transform = Transform( -4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -7.97972, 0, -14.6957 )
+speed_limit = 30.0
+spawn_countdown = 0.632
 
 [node name="Lane3" parent="." instance=ExtResource( 3 )]
 transform = Transform( -4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -0.477085, 0, -6.56838 )
@@ -53,7 +54,7 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -4.39005, 1.90735e-06, -30.455
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -8.94558, 1.90735e-06, -30.4556 )
 
 [node name="Lane" parent="." instance=ExtResource( 3 )]
-transform = Transform( -4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -0.477085, 0, -24.0277 )
+transform = Transform( 0.583995, 0, -0.811757, 0, 1, 0, 0.811757, 0, 0.583995, -1.52541, 0, -33.4301 )
 
 [node name="Vessel" parent="." instance=ExtResource( 4 )]
 transform = Transform( -4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -0.477085, 0, -19.6701 )
@@ -66,15 +67,6 @@ transform = Transform( -4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -0.4770
 
 [node name="River3" parent="." instance=ExtResource( 6 )]
 transform = Transform( -4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -0.477084, 0, -2.12009 )
-
-[node name="Vehicle" parent="." instance=ExtResource( 7 )]
-transform = Transform( -4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -0.477085, 0, -24.3916 )
-
-[node name="Vehicle2" parent="." instance=ExtResource( 7 )]
-transform = Transform( -4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -0.477085, 0, -15.0596 )
-
-[node name="Vehicle3" parent="." instance=ExtResource( 7 )]
-transform = Transform( -4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -0.477085, 0, -6.93227 )
 
 [node name="PlayingField" type="MeshInstance" parent="."]
 transform = Transform( 18.8425, 0, 0, 0, 1, 0, 0, 0, 26.251, 0, -1.08435, -19.6126 )

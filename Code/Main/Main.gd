@@ -7,9 +7,9 @@ var players : Array
 
 func _ready():
 	SpawnPlayer()
-	SpawnPlayer()
-	SpawnPlayer()
-	SpawnPlayer()
+#	SpawnPlayer()
+#	SpawnPlayer()
+#	SpawnPlayer()
 
 
 func SpawnPlayer():

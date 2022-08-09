@@ -14,3 +14,29 @@ script = ExtResource( 1 )
 transform = Transform( 1, 0, 0, 0, 0.0799046, 0, 0, 0, 18.4129, 0, 0, 0 )
 mesh = SubResource( 1 )
 material/0 = SubResource( 2 )
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 0.3
+autostart = true
+
+[node name="CSGCombiner" type="CSGCombiner" parent="."]
+visible = false
+
+[node name="CSGCylinder" type="CSGCylinder" parent="CSGCombiner"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0576819, 0.176281, 0 )
+operation = 2
+radius = 0.833205
+height = 3.63726
+sides = 15
+
+[node name="CSGBox" type="CSGBox" parent="CSGCombiner"]
+width = 6.792
+depth = 3.64157
+
+[node name="Spawn" type="Spatial" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 14.4735 )
+
+[node name="Despawn" type="Spatial" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -8.76715 )
+
+[connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]
