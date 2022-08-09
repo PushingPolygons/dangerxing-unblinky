@@ -11,6 +11,7 @@ var speed = 2.0
 var lives = 4 # Decrement on Player Spawn.
 var offset_ui = 200 # Pixels.
 var offset_3d = 3 # Meters.
+var parent_vessel: Vessel = null
 
 
 func _ready():
@@ -20,6 +21,9 @@ func _ready():
 
 
 func _process(delta):
+	if parent_vessel != null:
+		translation.x = parent_vessel.translation.z
+
 	if Input.is_action_just_pressed("move_forward"):
 		translation.z += -speed
 		rotation_degrees.y = 0
@@ -59,7 +63,7 @@ func UpdateLives(value):
 func PlayRandomSound(array):
 	var rando = randi() % array.size()
 	array[rando].play()
-	print(rando)
+	#print(rando)
 
 
 func _on_Player_area_entered(area):
@@ -68,10 +72,16 @@ func _on_Player_area_entered(area):
 		UpdateLives(-1)
 	
 	if area is Vessel:
+		parent_vessel = area
 		print("Riding a boat.")
 		# TODO: Vessel list
 		# Reparent to boat.
 		# or update positon to boat.
+	
+	if area is River:
+		if parent_vessel == null:
+			UpdateLives(-1)
+			print("Fell in river.")
 	
 	if area is Goal:
 		print("Landed on a goal.")

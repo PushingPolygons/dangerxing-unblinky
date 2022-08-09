@@ -27,7 +27,6 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.94634, 0 )
 transform = Transform( 0.244888, 0, 0, 0, 0.242778, 0.206942, 0, -0.127564, 0.393849, 0, 0, 0 )
 mesh = SubResource( 1 )
 skeleton = NodePath("../..")
-material/0 = null
 
 [node name="Tail" type="MeshInstance" parent="Chicken"]
 transform = Transform( 0.107393, 0, 0, 0, 0.265293, 0.120828, 0, -0.069524, 0.461061, 0, 0.441301, 0.592819 )

@@ -1,4 +1,4 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://Lane/Lane.gd" type="Script" id=1]
 
@@ -6,6 +6,18 @@
 
 [sub_resource type="SpatialMaterial" id=2]
 albedo_color = Color( 0.27451, 0.27451, 0.27451, 1 )
+
+[sub_resource type="SpatialMaterial" id=3]
+albedo_color = Color( 0.815686, 0.560784, 0.12549, 1 )
+
+[sub_resource type="SpatialMaterial" id=4]
+albedo_color = Color( 0.172549, 0.172549, 0.172549, 1 )
+
+[sub_resource type="SpatialMaterial" id=5]
+albedo_color = Color( 1, 0.960784, 0, 1 )
+
+[sub_resource type="SpatialMaterial" id=6]
+albedo_color = Color( 0, 0, 0, 1 )
 
 [node name="Lane" type="Spatial"]
 script = ExtResource( 1 )
@@ -19,24 +31,61 @@ material/0 = SubResource( 2 )
 wait_time = 0.3
 autostart = true
 
-[node name="CSGCombiner" type="CSGCombiner" parent="."]
-visible = false
+[node name="Spawn" type="Spatial" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 12.1363 )
 
-[node name="CSGCylinder" type="CSGCylinder" parent="CSGCombiner"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0576819, 0.176281, 0 )
-operation = 2
-radius = 0.833205
-height = 3.63726
-sides = 15
+[node name="Tunnel" type="CSGCombiner" parent="Spawn"]
+transform = Transform( 1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 0 )
+use_collision = true
 
-[node name="CSGBox" type="CSGBox" parent="CSGCombiner"]
+[node name="CSGBox" type="CSGBox" parent="Spawn/Tunnel"]
+transform = Transform( 0.999348, -0.0360788, 0.00132232, 0.036103, 0.998677, -0.0366024, -1.16415e-10, 0.0366263, 0.999329, 0, 0, 0 )
 width = 6.792
 depth = 3.64157
+material = SubResource( 3 )
 
-[node name="Spawn" type="Spatial" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 14.4735 )
+[node name="CSGCylinder" type="CSGCylinder" parent="Spawn/Tunnel"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0576819, 0.176281, 0 )
+operation = 2
+radius = 1.07532
+height = 3.77586
+sides = 15
+material = SubResource( 4 )
 
 [node name="Despawn" type="Spatial" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -8.76715 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -11.0345 )
+
+[node name="Crashwall" type="CSGCombiner" parent="Despawn"]
+transform = Transform( 0.718215, 0, 0, 0, 0.718215, 0, 0, 0, 0.226837, -1.45528, 0, -0.234645 )
+
+[node name="CSGPolygon" type="CSGPolygon" parent="Despawn/Crashwall"]
+transform = Transform( 0.991386, -0.0112308, 0.130494, 0, 0.996317, 0.0857473, -0.130976, -0.0850087, 0.987734, -0.427664, 0.630473, -0.0304441 )
+polygon = PoolVector2Array( -1.45621, 1.88888, 1.57705, -3.10782, 6.88033, -1.72215, 3.32898, 2.30171 )
+depth = 1.88
+material = SubResource( 5 )
+
+[node name="CSGCylinder" type="CSGCylinder" parent="Despawn/Crashwall"]
+transform = Transform( 0.991552, 0.129713, -5.66993e-09, 0, -4.37114e-08, -1, -0.129713, 0.991552, -4.33421e-08, 0, 6.06898e-08, -1.38842 )
+operation = 2
+radius = 1.55873
+height = 3.85242
+sides = 9
+material = SubResource( 6 )
+
+[node name="CSGCylinder2" type="CSGCylinder" parent="Despawn/Crashwall"]
+transform = Transform( 0.999556, -0.0298058, 1.30285e-09, 0, -4.37114e-08, -1, 0.0298058, 0.999556, -4.3692e-08, 4.06456, 2.24784, -1.92014 )
+operation = 2
+radius = 1.55873
+height = 3.85242
+sides = 15
+material = SubResource( 6 )
+
+[node name="CSGCylinder3" type="CSGCylinder" parent="Despawn/Crashwall"]
+transform = Transform( 0.999081, 0.0428696, -1.87389e-09, 0, -4.37114e-08, -1, -0.0428696, 0.999081, -4.36712e-08, 0.373145, 2.24784, -1.80359 )
+operation = 2
+radius = 0.588563
+height = 3.85242
+sides = 9
+material = SubResource( 6 )
 
 [connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]

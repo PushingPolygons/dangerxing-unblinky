@@ -10,7 +10,7 @@
 left_to_right = -0.1
 
 [sub_resource type="BoxShape" id=1]
-extents = Vector3( 0.860163, 0.518188, 1.71628 )
+extents = Vector3( 1.16107, 0.518188, 1.71628 )
 
 [node name="Vessel" type="Area"]
 script = ExtResource( 3 )

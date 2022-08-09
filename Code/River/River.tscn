@@ -1,4 +1,4 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://River/River.gd" type="Script" id=1]
 
@@ -10,6 +10,15 @@ albedo_color = Color( 0.2, 0.345098, 0.65098, 1 )
 [sub_resource type="BoxShape" id=3]
 extents = Vector3( 1, 0.114813, 18.495 )
 
+[sub_resource type="SpatialMaterial" id=4]
+albedo_color = Color( 0.447059, 0.764706, 0.815686, 1 )
+
+[sub_resource type="SpatialMaterial" id=5]
+albedo_color = Color( 0.811765, 0.815686, 0.447059, 1 )
+
+[sub_resource type="SpatialMaterial" id=6]
+albedo_color = Color( 0.572549, 0.568627, 0.552941, 1 )
+
 [node name="River" type="Area"]
 script = ExtResource( 1 )
 
@@ -20,3 +29,75 @@ material/0 = SubResource( 2 )
 
 [node name="CollisionShape" type="CollisionShape" parent="."]
 shape = SubResource( 3 )
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 0.3
+autostart = true
+
+[node name="Spawn" type="Spatial" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 12.1363 )
+
+[node name="Marina" type="CSGCombiner" parent="Spawn"]
+transform = Transform( 0.464477, 0, 0, 0, -2.03029e-08, 0.464477, 0, -0.464477, -2.03029e-08, 0, 0, 0 )
+use_collision = true
+
+[node name="CSGTorus2" type="CSGTorus" parent="Spawn/Marina"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.84054, 0 )
+inner_radius = 1.41333
+outer_radius = 2.81154
+sides = 39
+ring_sides = 4
+smooth_faces = false
+
+[node name="CSGTorus" type="CSGTorus" parent="Spawn/Marina"]
+transform = Transform( 0.999952, -4.65661e-10, -0.00979114, -0.00552166, 0.825813, -0.563917, 0.00808565, 0.563944, 0.825773, 0, 3.02728, 0.506476 )
+operation = 2
+inner_radius = 1.41333
+outer_radius = 2.81154
+sides = 3
+smooth_faces = false
+
+[node name="Despawn" type="Spatial" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -8.76715 )
+
+[node name="Waterfall" type="CSGCombiner" parent="Despawn"]
+transform = Transform( 0.341464, 0, 0, 0, 0.341464, 0, 0, 0, 0.341464, 0, 0, 0 )
+
+[node name="Falls" type="CSGBox" parent="Despawn/Waterfall"]
+transform = Transform( 0.994262, 0, -0.106976, 0, 1, 0, 0.106976, 0, 0.994262, 0, 2.21857, 0 )
+height = 6.61028
+depth = 0.360551
+material = SubResource( 4 )
+
+[node name="TopFalls" type="CSGBox" parent="Despawn/Waterfall"]
+transform = Transform( 0.994262, 0.106764, -0.00672637, 0, 0.0628776, 0.998021, 0.106976, -0.992294, 0.0625168, 0.340085, 5.58036, -3.16086 )
+height = 6.61028
+depth = 0.360551
+material = SubResource( 4 )
+
+[node name="Cutout" type="CSGSphere" parent="Despawn/Waterfall"]
+transform = Transform( 1, 0, 0, 0, 1.92332, 0, 0, 0, 1, 0.0542195, 2.51687, 0.203801 )
+operation = 2
+radius = 0.731575
+
+[node name="Mountain" type="CSGBox" parent="Despawn/Waterfall"]
+transform = Transform( 0.994262, 0, -0.106976, 0, 1, 0, 0.106976, 0, 0.994262, 0.246474, 2.21857, -2.2908 )
+width = 15.1058
+height = 6.04292
+depth = 4.31998
+material = SubResource( 5 )
+
+[node name="CSGSphere" type="CSGSphere" parent="Despawn/Waterfall"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.719493, 0, 0.388064 )
+radius = 0.731575
+
+[node name="Rock" type="CSGSphere" parent="Despawn/Waterfall"]
+transform = Transform( 0.617456, 0, 0, 0, 0.826579, 0, 0, 0, 0.826579, 0.0542195, 3.17379, 0.203801 )
+radius = 0.731575
+material = SubResource( 6 )
+
+[node name="CSGSphere2" type="CSGSphere" parent="Despawn/Waterfall"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.433142, 0, 0.388064 )
+radius = 0.556751
+
+[connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]
