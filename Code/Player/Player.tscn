@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=13 format=2]
 
 [ext_resource path="res://Player/Player.gd" type="Script" id=1]
 [ext_resource path="res://Player/assets/materials/feathers.tres" type="Material" id=2]
@@ -9,6 +9,10 @@
 [ext_resource path="res://fonts/Ubuntu-Title.ttf" type="DynamicFontData" id=7]
 
 [sub_resource type="CubeMesh" id=1]
+
+[sub_resource type="CylinderMesh" id=4]
+
+[sub_resource type="CubeMesh" id=5]
 
 [sub_resource type="BoxShape" id=2]
 extents = Vector3( 0.566506, 0.595541, 0.585908 )
@@ -22,6 +26,7 @@ script = ExtResource( 1 )
 
 [node name="Chicken" type="Spatial" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.94634, 0 )
+visible = false
 
 [node name="Body" type="MeshInstance" parent="Chicken"]
 transform = Transform( 0.244888, 0, 0, 0, 0.242778, 0.206942, 0, -0.127564, 0.393849, 0, 0, 0 )
@@ -61,6 +66,16 @@ mesh = SubResource( 1 )
 skeleton = NodePath("../../..")
 material/0 = ExtResource( 2 )
 
+[node name="Tomb" type="Spatial" parent="."]
+
+[node name="MeshInstance" type="MeshInstance" parent="Tomb"]
+transform = Transform( 0.691679, 0, 0, 0, -7.0045e-09, -0.691679, 0, 0.160244, -3.02342e-08, 0, 1.70606, 7.45743e-08 )
+mesh = SubResource( 4 )
+
+[node name="MeshInstance2" type="MeshInstance" parent="Tomb"]
+transform = Transform( 0.762323, 0, 0, 0, 1, 0, 0, 0, 0.168996, 0, 0.722808, 0 )
+mesh = SubResource( 5 )
+
 [node name="CollisionShape" type="CollisionShape" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.94634, 0 )
 shape = SubResource( 2 )
@@ -77,8 +92,10 @@ text = "99"
 
 [node name="move_0" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 5 )
+volume_db = -61.176
 
 [node name="move_1" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 6 )
+volume_db = -61.176
 
 [connection signal="area_entered" from="." to="." method="_on_Player_area_entered"]
