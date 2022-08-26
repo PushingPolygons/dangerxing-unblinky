@@ -18,6 +18,15 @@ func SpawnVessel():
 	vessel.Initialize($Spawn.translation, speed_limit, $Despawn.translation.z)
 	add_child(vessel)
 
+	#var wait =  rand_range(0.0, 1.0)
+	var wait = randi() % 4
+	
+	print(wait)
+	wait += 0.01
+	if wait >= 0:
+		$Timer.wait_time = wait
+#		$Timer.wait_time = randi() % 1 + 1 # 
+
 
 func _on_Timer_timeout():
 	SpawnVessel()
