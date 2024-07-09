@@ -1,0 +1,22 @@
+[gd_scene load_steps=5 format=3 uid="uid://dh150y0dwalu8"]
+
+[ext_resource type="Script" path="res://River/River.gd" id="1_6fpww"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_3yvgu"]
+size = Vector3(0.288086, 0.2, 16)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_4dng4"]
+albedo_color = Color(1.73271e-06, 0.148718, 0.448364, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_eimu4"]
+size = Vector3(1, 0.2, 16)
+
+[node name="River" type="Area3D"]
+script = ExtResource("1_6fpww")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("BoxShape3D_3yvgu")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+material_override = SubResource("StandardMaterial3D_4dng4")
+mesh = SubResource("BoxMesh_eimu4")

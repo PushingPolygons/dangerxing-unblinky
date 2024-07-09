@@ -1,1 +1,3 @@
-# Danger X-ing
+# danger-xing
+
+An awesome frojjer progect.
