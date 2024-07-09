@@ -1,11 +1,24 @@
-[gd_scene load_steps=12 format=3 uid="uid://cocntdx7uikor"]
+[gd_scene load_steps=15 format=3 uid="uid://cocntdx7uikor"]
 
 [ext_resource type="PackedScene" uid="uid://dd3dm305m8uwx" path="res://Frog/Frog.tscn" id="1_0wvwd"]
+[ext_resource type="Script" path="res://Main/Main.gd" id="1_uirpq"]
+[ext_resource type="PackedScene" uid="uid://b835064b7wfwc" path="res://Main/assets/life.tscn" id="2_50jvl"]
 [ext_resource type="PackedScene" uid="uid://2u4b2vx1erhe" path="res://Lane/Lane.tscn" id="2_hyfrk"]
 [ext_resource type="PackedScene" uid="uid://da4837w5e71nh" path="res://Vehicle/Vehicle.tscn" id="2_ri2qc"]
 [ext_resource type="PackedScene" uid="uid://ctv4dx4gjufbf" path="res://Nest/Nest.tscn" id="4_ljbhj"]
 [ext_resource type="PackedScene" uid="uid://dh150y0dwalu8" path="res://River/River.tscn" id="5_7gsh6"]
 [ext_resource type="PackedScene" uid="uid://bf762pqmo2hau" path="res://Vessel/Vessel.tscn" id="6_aj5df"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_gwxtq"]
+content_margin_left = 8.0
+content_margin_top = 6.0
+content_margin_right = 8.0
+content_margin_bottom = 8.0
+bg_color = Color(1, 0.211765, 0.72549, 0.803922)
+corner_radius_top_left = 12
+corner_radius_top_right = 12
+corner_radius_bottom_right = 12
+corner_radius_bottom_left = 12
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_70a5e"]
 sky_top_color = Color(0.61705, 0.389747, 0.133266, 1)
@@ -27,6 +40,44 @@ albedo_color = Color(0.0985202, 0.264006, 0.127816, 1)
 [sub_resource type="PlaneMesh" id="PlaneMesh_x301o"]
 
 [node name="Main" type="Node"]
+script = ExtResource("1_uirpq")
+
+[node name="Menu" type="PanelContainer" parent="."]
+anchors_preset = 9
+anchor_bottom = 1.0
+offset_left = 12.0
+offset_top = 12.0
+offset_right = 56.98
+offset_bottom = -12.0
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_gwxtq")
+
+[node name="VBox" type="VBoxContainer" parent="Menu"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Menu/VBox"]
+layout_mode = 2
+text = "Lives:"
+
+[node name="LivesUI" type="VBoxContainer" parent="Menu/VBox"]
+layout_mode = 2
+
+[node name="Life" parent="Menu/VBox/LivesUI" instance=ExtResource("2_50jvl")]
+layout_mode = 2
+
+[node name="Life2" parent="Menu/VBox/LivesUI" instance=ExtResource("2_50jvl")]
+layout_mode = 2
+
+[node name="Life3" parent="Menu/VBox/LivesUI" instance=ExtResource("2_50jvl")]
+layout_mode = 2
+
+[node name="ProgressBar" type="ProgressBar" parent="Menu/VBox"]
+custom_minimum_size = Vector2(0, 256)
+layout_mode = 2
+size_flags_vertical = 10
+value = 55.81
+fill_mode = 3
+show_percentage = false
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_us8yg")

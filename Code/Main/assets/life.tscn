@@ -1,0 +1,10 @@
+[gd_scene load_steps=2 format=3 uid="uid://b835064b7wfwc"]
+
+[ext_resource type="Texture2D" uid="uid://jd68dih8rflp" path="res://Main/icon.svg" id="1_r6uay"]
+
+[node name="Life" type="TextureRect"]
+custom_minimum_size = Vector2(32, 32)
+size_flags_horizontal = 4
+size_flags_vertical = 4
+texture = ExtResource("1_r6uay")
+expand_mode = 1

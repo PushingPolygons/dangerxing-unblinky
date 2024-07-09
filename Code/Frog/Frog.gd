@@ -1,10 +1,13 @@
 extends Area3D
 class_name Frog
 
+@onready var graphics = $Graphics
+
+@export var speed: float = 4.0 # m/s.
+
 var current_position: Vector3
 var target_position: Vector3
 var weight: float = 0.0
-var speed: float = 2.0
 var stride_length: float = 1.0
 
 
@@ -24,16 +27,23 @@ func _physics_process(delta):
 	else:
 		if Input.is_action_just_pressed("move_left"):
 			target_position.x -= stride_length
+			graphics.rotation_degrees.y = 90.0
 			weight = 0.0
 		if Input.is_action_just_pressed("move_right"):
 			target_position.x += stride_length
+			graphics.rotation_degrees.y = -90.0
 			weight = 0.0
 		if Input.is_action_just_pressed("move_fore"):
 			target_position.z -= stride_length
+			graphics.rotation_degrees.y = 0.0
 			weight = 0.0
 		if Input.is_action_just_pressed("move_back"):
 			target_position.z += stride_length
+			graphics.rotation_degrees.y = 180.0
 			weight = 0.0
+
+
+
 
 
 func OnAreaEntered(area):

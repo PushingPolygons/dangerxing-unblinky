@@ -3,7 +3,7 @@
 [ext_resource type="Script" path="res://Frog/Frog.gd" id="1_uskmt"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_71euq"]
-size = Vector3(0.553711, 0.433075, 0.700195)
+size = Vector3(0.6, 0.6, 0.6)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_sqn0n"]
 albedo_color = Color(5.53504e-07, 0.52613, 0.355498, 1)
@@ -20,15 +20,20 @@ script = ExtResource("1_uskmt")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.216721, 0.0220944)
 shape = SubResource("BoxShape3D_71euq")
 
-[node name="Body" type="MeshInstance3D" parent="."]
+[node name="Graphics" type="Node3D" parent="."]
+
+[node name="Body" type="MeshInstance3D" parent="Graphics"]
 transform = Transform3D(0.39856, 0, 0, 0, 0.328328, 0, 0, 0, 0.605161, 0.0181875, 0.174332, 0.032566)
 material_override = SubResource("StandardMaterial3D_sqn0n")
 mesh = SubResource("BoxMesh_jkmhq")
+skeleton = NodePath("../..")
 
-[node name="EyeL" type="MeshInstance3D" parent="."]
+[node name="EyeL" type="MeshInstance3D" parent="Graphics"]
 transform = Transform3D(0.605161, 0, 0, 0, 0.605161, 0, 0, 0, 0.605161, -0.227616, 0.363449, -0.258012)
 mesh = SubResource("BoxMesh_g2146")
+skeleton = NodePath("../..")
 
-[node name="EyeR" type="MeshInstance3D" parent="."]
+[node name="EyeR" type="MeshInstance3D" parent="Graphics"]
 transform = Transform3D(0.605161, 0, 0, 0, 0.605161, 0, 0, 0, 0.605161, 0.232715, 0.363449, -0.258012)
 mesh = SubResource("BoxMesh_g2146")
+skeleton = NodePath("../..")
