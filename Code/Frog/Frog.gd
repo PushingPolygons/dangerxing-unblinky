@@ -5,6 +5,7 @@ class_name Frog
 
 @export var speed: float = 4.0 # m/s.
 
+var main: Main
 var current_position: Vector3
 var target_position: Vector3
 var weight: float = 0.0
@@ -54,6 +55,7 @@ func OnAreaEntered(area):
 		if area.is_occupied == false:
 			area.is_occupied = true
 			print("Roosting!!!!")
+		main.IsGameOver()
 	
 	if area is River:
 		print("Drowned in river.")

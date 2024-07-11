@@ -37,3 +37,9 @@ skeleton = NodePath("../..")
 transform = Transform3D(0.605161, 0, 0, 0, 0.605161, 0, 0, 0, 0.605161, 0.232715, 0.363449, -0.258012)
 mesh = SubResource("BoxMesh_g2146")
 skeleton = NodePath("../..")
+
+[node name="Rig" type="Node3D" parent="."]
+transform = Transform3D(0.985529, -0.142036, 0.0925072, 0, 0.545751, 0.837947, -0.169504, -0.825822, 0.537854, 0, 0, 0)
+
+[node name="Camera" type="Camera3D" parent="Rig"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 8)
