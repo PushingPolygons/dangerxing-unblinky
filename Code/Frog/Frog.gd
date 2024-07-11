@@ -15,6 +15,7 @@ var stride_length: float = 1.0
 func _ready():
 	area_entered.connect(OnAreaEntered)
 	current_position = Vector3(0.0, 0.0, 0.0)
+	graphics.hide()
 
 
 func _physics_process(delta):
@@ -26,22 +27,23 @@ func _physics_process(delta):
 		
 		position = lerp(current_position, target_position, weight)
 	else:
-		if Input.is_action_just_pressed("move_left"):
-			target_position.x -= stride_length
-			graphics.rotation_degrees.y = 90.0
-			weight = 0.0
-		if Input.is_action_just_pressed("move_right"):
-			target_position.x += stride_length
-			graphics.rotation_degrees.y = -90.0
-			weight = 0.0
-		if Input.is_action_just_pressed("move_fore"):
-			target_position.z -= stride_length
-			graphics.rotation_degrees.y = 0.0
-			weight = 0.0
-		if Input.is_action_just_pressed("move_back"):
-			target_position.z += stride_length
-			graphics.rotation_degrees.y = 180.0
-			weight = 0.0
+		if graphics.visible:
+			if Input.is_action_just_pressed("move_left"):
+				target_position.x -= stride_length
+				graphics.rotation_degrees.y = 90.0
+				weight = 0.0
+			if Input.is_action_just_pressed("move_right"):
+				target_position.x += stride_length
+				graphics.rotation_degrees.y = -90.0
+				weight = 0.0
+			if Input.is_action_just_pressed("move_fore"):
+				target_position.z -= stride_length
+				graphics.rotation_degrees.y = 0.0
+				weight = 0.0
+			if Input.is_action_just_pressed("move_back"):
+				target_position.z += stride_length
+				graphics.rotation_degrees.y = 180.0
+				weight = 0.0
 
 
 

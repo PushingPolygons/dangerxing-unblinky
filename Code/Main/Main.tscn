@@ -42,8 +42,37 @@ albedo_color = Color(0.0985202, 0.264006, 0.127816, 1)
 [node name="Main" type="Node"]
 script = ExtResource("1_uirpq")
 
+[node name="Menu" type="PanelContainer" parent="."]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -130.0
+offset_top = -82.0
+offset_right = 218.0
+offset_bottom = 94.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBox" type="VBoxContainer" parent="Menu"]
+layout_mode = 2
+
+[node name="PlayButton" type="Button" parent="Menu/VBox"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_font_sizes/font_size = 42
+text = "Play"
+
+[node name="OptionsButton" type="Button" parent="Menu/VBox"]
+layout_mode = 2
+text = "Options"
+
+[node name="QuitButton" type="Button" parent="Menu/VBox"]
+layout_mode = 2
+text = "Quit"
+
 [node name="UI" type="PanelContainer" parent="."]
-visible = false
 anchors_preset = 9
 anchor_bottom = 1.0
 offset_left = 12.0

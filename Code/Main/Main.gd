@@ -3,7 +3,13 @@ class_name Main
 
 const LIFE: PackedScene = preload("res://Main/assets/life.tscn")
 
-@onready var lives_ui = $Menu/VBox/LivesUI
+# Menu items.
+@onready var menu = $Menu
+@onready var play_button = $Menu/VBox/PlayButton
+@onready var options_button = $Menu/VBox/OptionsButton
+@onready var quit_button = $Menu/VBox/QuitButton
+
+@onready var lives_ui = $UI/VBox/LivesUI
 @onready var nests: Array[Nest] = [$Nests/Nest1, $Nests/Nest2, $Nests/Nest3, $Nests/Nest4, $Nests/Nest5]
 @onready var frog = $Frog
 
@@ -19,12 +25,20 @@ static func DeleteChildren(node: Node):
 
 
 func _ready():
+	play_button.pressed.connect(OnPlayPressed)
+	
 	DeleteChildren(lives_ui)
 	UpdateLives(3)
 	frog.main = self
 
 
+func OnPlayPressed():
+	menu.hide()
+	frog.graphics.show()
+
+
 func IsGameOver():
+	print(nests)
 	for nest: Nest in nests:
 		if not nest.is_occupied:
 			return
