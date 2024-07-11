@@ -1,10 +1,18 @@
-[gd_scene load_steps=4 format=3 uid="uid://ctv4dx4gjufbf"]
+[gd_scene load_steps=7 format=3 uid="uid://ctv4dx4gjufbf"]
 
 [ext_resource type="Script" path="res://Nest/Nest.gd" id="1_rdv8n"]
 
 [sub_resource type="CylinderShape3D" id="CylinderShape3D_dgjqe"]
 height = 0.4
 radius = 0.4
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_31acc"]
+albedo_color = Color(5.53504e-07, 0.52613, 0.355498, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_qfhqr"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_dqs4k"]
+size = Vector3(0.2, 0.2, 0.2)
 
 [sub_resource type="CylinderMesh" id="CylinderMesh_y1neb"]
 top_radius = 0.4
@@ -17,5 +25,27 @@ script = ExtResource("1_rdv8n")
 [node name="Collider" type="CollisionShape3D" parent="."]
 shape = SubResource("CylinderShape3D_dgjqe")
 
-[node name="Graphics" type="MeshInstance3D" parent="."]
+[node name="Graphics" type="Node3D" parent="."]
+
+[node name="Frog" type="Node3D" parent="Graphics"]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0.281383, 0)
+
+[node name="Body" type="MeshInstance3D" parent="Graphics/Frog"]
+transform = Transform3D(0.39856, 0, 0, 0, 0.328328, 0, 0, 0, 0.605161, 0.0181875, 0.174332, 0.032566)
+material_override = SubResource("StandardMaterial3D_31acc")
+mesh = SubResource("BoxMesh_qfhqr")
+skeleton = NodePath("../../..")
+
+[node name="EyeL" type="MeshInstance3D" parent="Graphics/Frog"]
+transform = Transform3D(0.605161, 0, 0, 0, 0.605161, 0, 0, 0, 0.605161, -0.227616, 0.363449, -0.258012)
+mesh = SubResource("BoxMesh_dqs4k")
+skeleton = NodePath("../../..")
+
+[node name="EyeR" type="MeshInstance3D" parent="Graphics/Frog"]
+transform = Transform3D(0.605161, 0, 0, 0, 0.605161, 0, 0, 0, 0.605161, 0.232715, 0.363449, -0.258012)
+mesh = SubResource("BoxMesh_dqs4k")
+skeleton = NodePath("../../..")
+
+[node name="Nest" type="MeshInstance3D" parent="Graphics"]
 mesh = SubResource("CylinderMesh_y1neb")
+skeleton = NodePath("../..")

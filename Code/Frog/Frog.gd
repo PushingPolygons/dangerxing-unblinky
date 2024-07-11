@@ -44,6 +44,10 @@ func _physics_process(delta):
 				target_position.z += stride_length
 				graphics.rotation_degrees.y = 180.0
 				weight = 0.0
+		else:
+			# Turn the frog back on after reset.
+			graphics.show() 
+			
 
 
 
@@ -55,9 +59,13 @@ func OnAreaEntered(area):
 	
 	if area is Nest:
 		if area.is_occupied == false:
-			area.is_occupied = true
+			area.SetOccupied(true)
+			#area.is_occupied = true
 			print("Roosting!!!!")
+			target_position = Vector3.ZERO
+			graphics.hide()
 		main.IsGameOver()
+
 	
 	if area is River:
 		print("Drowned in river.")
