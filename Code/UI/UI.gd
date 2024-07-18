@@ -17,13 +17,11 @@ func _ready():
 	UpdateLives(3)
 
 
-
 func _process(delta):
 	if Input.is_action_just_pressed("spawn_frog"):
 		if frog.is_dead:
 			UpdateLives(-1)
 			frog.Rez()
-
 
 
 func Initialize(main: Main, frog: Frog):
@@ -33,10 +31,13 @@ func Initialize(main: Main, frog: Frog):
 
 func UpdateLives(delta_lives):
 	lives += delta_lives
-	Tools.DeleteChildren(lives_ui)
-	for i in lives:
-		SpawnLife()
-	print(lives)
+	if lives < 0 and frog.is_dead:
+		main.GameOver()
+	else:
+		Tools.DeleteChildren(lives_ui)
+		for i in lives:
+			SpawnLife()
+		print(lives)
 
 
 func SpawnLife():

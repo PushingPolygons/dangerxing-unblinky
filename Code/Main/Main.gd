@@ -21,6 +21,11 @@ func Play():
 func RezFrog():
 	frog.Rez()
 
+
+func GameOver():
+	menu.show()
+
+
 func IsGameOver():
 	for nest: Nest in nests:
 		print(nest.is_occupied)

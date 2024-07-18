@@ -51,14 +51,11 @@ func _physics_process(delta):
 		#else:
 			# Turn the frog back on after reset.
 			#graphics.show()
-			
-			
 
 
 func Rez():
 	is_dead = false
 	graphics.show()
-
 
 
 func Die():
@@ -70,6 +67,7 @@ func Die():
 
 func OnAreaEntered(area):
 	if area is Vehicle:
+		Die()
 		print("Hit by a car.")
 	
 	if area is Nest:
