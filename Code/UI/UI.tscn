@@ -1,0 +1,59 @@
+[gd_scene load_steps=4 format=3 uid="uid://b167boqjwobsh"]
+
+[ext_resource type="PackedScene" uid="uid://b835064b7wfwc" path="res://Main/assets/life.tscn" id="1_5s0te"]
+[ext_resource type="Script" path="res://UI/UI.gd" id="1_5v16l"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_gwxtq"]
+content_margin_left = 8.0
+content_margin_top = 6.0
+content_margin_right = 8.0
+content_margin_bottom = 8.0
+bg_color = Color(1, 0.211765, 0.72549, 0.803922)
+corner_radius_top_left = 12
+corner_radius_top_right = 12
+corner_radius_bottom_right = 12
+corner_radius_bottom_left = 12
+
+[node name="UI" type="PanelContainer"]
+anchors_preset = 9
+anchor_bottom = 1.0
+offset_left = 12.0
+offset_top = 12.0
+offset_right = 56.98
+offset_bottom = -12.0
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_gwxtq")
+script = ExtResource("1_5v16l")
+
+[node name="VBox" type="VBoxContainer" parent="."]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="VBox"]
+layout_mode = 2
+text = "Lives:"
+
+[node name="LivesUI" type="VBoxContainer" parent="VBox"]
+layout_mode = 2
+
+[node name="Life" parent="VBox/LivesUI" instance=ExtResource("1_5s0te")]
+layout_mode = 2
+
+[node name="Life2" parent="VBox/LivesUI" instance=ExtResource("1_5s0te")]
+layout_mode = 2
+
+[node name="Life3" parent="VBox/LivesUI" instance=ExtResource("1_5s0te")]
+layout_mode = 2
+
+[node name="Life4" parent="VBox/LivesUI" instance=ExtResource("1_5s0te")]
+layout_mode = 2
+
+[node name="Life5" parent="VBox/LivesUI" instance=ExtResource("1_5s0te")]
+layout_mode = 2
+
+[node name="ProgressBar" type="ProgressBar" parent="VBox"]
+custom_minimum_size = Vector2(0, 256)
+layout_mode = 2
+size_flags_vertical = 10
+value = 55.81
+fill_mode = 3
+show_percentage = false

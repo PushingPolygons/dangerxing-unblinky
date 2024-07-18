@@ -27,7 +27,7 @@ func _process(delta):
 func OnPlayPressed():
 	hide()
 	get_tree().paused = false
-	main.frog.graphics.show()
+	main.Play()
 
 
 func OnQuitPressed():

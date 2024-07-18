@@ -4,6 +4,7 @@ class_name Frog
 @onready var graphics = $Graphics
 
 @export var speed: float = 4.0 # m/s.
+#@export var reset_speed: float = 0.5
 
 var main: Main
 var current_position: Vector3
@@ -11,11 +12,14 @@ var target_position: Vector3
 var weight: float = 0.0
 var stride_length: float = 1.0
 
+var is_dead: bool = true
+
 
 func _ready():
 	area_entered.connect(OnAreaEntered)
 	current_position = Vector3(0.0, 0.0, 0.0)
 	graphics.hide()
+	
 
 
 func _physics_process(delta):
@@ -44,13 +48,24 @@ func _physics_process(delta):
 				target_position.z += stride_length
 				graphics.rotation_degrees.y = 180.0
 				weight = 0.0
-		else:
+		#else:
 			# Turn the frog back on after reset.
-			graphics.show() 
+			#graphics.show()
+			
 			
 
 
+func Rez():
+	is_dead = false
+	graphics.show()
 
+
+
+func Die():
+	main.IsGameOver()
+	is_dead = true
+	graphics.hide()
+	target_position = Vector3.ZERO
 
 
 func OnAreaEntered(area):
@@ -68,6 +83,7 @@ func OnAreaEntered(area):
 
 	
 	if area is River:
+		Die()
 		print("Drowned in river.")
 		
 	if area is Vessel:
