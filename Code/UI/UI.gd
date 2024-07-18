@@ -15,6 +15,8 @@ var life_span: float = MAX_LIFE_SPAN # seconds.
 
 func _ready():
 	hide()
+	# FIXME: Found a bug.
+	# HACK: Max life span workaround.
 	progress_bar.max_value = MAX_LIFE_SPAN
 	progress_bar.value = MAX_LIFE_SPAN
 	Tools.DeleteChildren(lives_ui)
