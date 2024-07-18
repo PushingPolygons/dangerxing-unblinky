@@ -54,6 +54,5 @@ layout_mode = 2
 custom_minimum_size = Vector2(0, 256)
 layout_mode = 2
 size_flags_vertical = 10
-value = 55.81
 fill_mode = 3
 show_percentage = false
