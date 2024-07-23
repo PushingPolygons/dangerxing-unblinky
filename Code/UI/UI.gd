@@ -1,16 +1,20 @@
-extends PanelContainer
+extends Control
 class_name UI
 
 const LIFE: PackedScene = preload("res://Main/assets/life.tscn")
 const MAX_LIFE_SPAN: float = 15.0
 
-@onready var lives_ui = $VBox/LivesUI
-@onready var progress_bar = $VBox/ProgressBar
+@onready var lives_ui = $SideBar/VBox/LivesUI
+@onready var progress_bar = $SideBar/VBox/ProgressBar
+@onready var score_ui = $ScorePanel/ScoreUI
+
 
 @export var drain_life: bool = true
 
 var main: Main
 var frog: Frog
+
+var score: int = 0
 var lives: int = 0
 var life_span: float = MAX_LIFE_SPAN # seconds.
 
@@ -22,6 +26,7 @@ func _ready():
 	progress_bar.max_value = MAX_LIFE_SPAN
 	progress_bar.value = MAX_LIFE_SPAN
 	Tools.DeleteChildren(lives_ui)
+	UpdateScore(0)
 	UpdateLives(3)
 
 
@@ -46,6 +51,12 @@ func _process(delta):
 func Initialize(main: Main, frog: Frog):
 	self.main = main
 	self.frog = frog
+	frog.ui = self
+
+
+func UpdateScore(delta_score: int):
+	score += delta_score
+	score_ui.text = str(score)
 
 
 func UpdateLives(delta_lives):

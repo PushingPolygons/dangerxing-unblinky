@@ -7,6 +7,8 @@ class_name Frog
 #@export var reset_speed: float = 0.5
 
 var main: Main
+var ui: UI
+
 var current_position: Vector3
 var target_position: Vector3
 var weight: float = 0.0
@@ -27,8 +29,6 @@ func _ready():
 
 
 func _physics_process(delta):
-	if vessel != null:
-		global_position = vessel.global_position + seat_offset
 		
 	
 	if current_position != target_position:
@@ -40,19 +40,44 @@ func _physics_process(delta):
 		position = lerp(current_position, target_position, weight)
 	else:
 		
+		if vessel != null:
+			global_position = vessel.global_position + seat_offset
+
+			position = lerp(current_position, target_position, weight)
+		
 		if graphics.visible:
 			if Input.is_action_just_pressed("move_left"):
-				target_position.x -= stride_length
 				graphics.rotation_degrees.y = 90.0
-				weight = 0.0
+				if vessel != null:
+					seat_offset.x -= 1.0
+					current_position = global_position
+					target_position = current_position + Vector3.LEFT
+				else:
+					target_position.x -= stride_length
+					weight = 0.0
+			
 			if Input.is_action_just_pressed("move_right"):
-				target_position.x += stride_length
 				graphics.rotation_degrees.y = -90.0
-				weight = 0.0
+				
+				if vessel != null:
+					seat_offset.x += 1.0
+				else:
+					target_position.x += stride_length
+					weight = 0.0
+			
 			if Input.is_action_just_pressed("move_fore"):
-				target_position.z -= stride_length
 				graphics.rotation_degrees.y = 0.0
-				weight = 0.0
+				
+				if vessel != null:
+					global_position = vessel.global_position
+					current_position = global_position.round()
+					target_position = current_position + Vector3.FORWARD
+					vessel = null
+					weight = 0.0
+				else:
+					target_position.z -= stride_length
+					weight = 0.0
+			
 			if Input.is_action_just_pressed("move_back"):
 				target_position.z += stride_length
 				graphics.rotation_degrees.y = 180.0
@@ -85,6 +110,8 @@ func OnAreaEntered(area):
 			graphics.hide()
 		main.IsGameOver()
 	
+	if area is Lane:
+		ui.UpdateScore(10)
 	#if area is River and vessel == null:
 		#Die()
 		#print("Drowned in river.")
@@ -101,4 +128,6 @@ func OnAreaEntered(area):
 func OnAreaExited(area):
 	if area is Vessel:
 		vessel = null
+		current_position = global_position
+		target_position = global_position
 		print("Jumped off log.")
