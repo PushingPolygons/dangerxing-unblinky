@@ -13,16 +13,24 @@ var weight: float = 0.0
 var stride_length: float = 1.0
 
 var is_dead: bool = true
+var vessel: Vessel = null
+var seat_offset: Vector3 = Vector3.ZERO
 
 
 func _ready():
 	area_entered.connect(OnAreaEntered)
+	area_exited.connect(OnAreaExited)
 	current_position = Vector3(0.0, 0.0, 0.0)
 	graphics.hide()
-	
+
+
 
 
 func _physics_process(delta):
+	if vessel != null:
+		global_position = vessel.global_position + seat_offset
+		
+	
 	if current_position != target_position:
 		weight += speed * delta
 		if weight >= 1.0:
@@ -31,6 +39,7 @@ func _physics_process(delta):
 		
 		position = lerp(current_position, target_position, weight)
 	else:
+		
 		if graphics.visible:
 			if Input.is_action_just_pressed("move_left"):
 				target_position.x -= stride_length
@@ -66,9 +75,6 @@ func Die():
 
 
 func OnAreaEntered(area):
-	if area is Vehicle:
-		Die()
-		print("Hit by a car.")
 	
 	if area is Nest:
 		if area.is_occupied == false:
@@ -78,12 +84,21 @@ func OnAreaEntered(area):
 			target_position = Vector3.ZERO
 			graphics.hide()
 		main.IsGameOver()
-
 	
-	if area is River:
-		Die()
-		print("Drowned in river.")
-		
+	#if area is River and vessel == null:
+		#Die()
+		#print("Drowned in river.")
+	
 	if area is Vessel:
-		print("Riding the log!!")
-	
+		vessel = area
+		seat_offset.x = floorf(global_position.distance_to(area.global_position))
+		print("Riding the log!!: ", seat_offset)
+	elif area is Vehicle:
+		Die()
+		print("Hit by a car.")
+
+
+func OnAreaExited(area):
+	if area is Vessel:
+		vessel = null
+		print("Jumped off log.")

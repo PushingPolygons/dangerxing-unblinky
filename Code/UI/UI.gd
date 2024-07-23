@@ -7,6 +7,8 @@ const MAX_LIFE_SPAN: float = 15.0
 @onready var lives_ui = $VBox/LivesUI
 @onready var progress_bar = $VBox/ProgressBar
 
+@export var drain_life: bool = true
+
 var main: Main
 var frog: Frog
 var lives: int = 0
@@ -24,7 +26,7 @@ func _ready():
 
 
 func _process(delta):
-	if not frog.is_dead:
+	if not frog.is_dead and drain_life:
 		life_span -= delta
 		progress_bar.value = life_span
 		# TODO: How do I scale these numbers?
