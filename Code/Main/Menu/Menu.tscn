@@ -1,6 +1,65 @@
-[gd_scene load_steps=2 format=3 uid="uid://bfj6hso5vxxoo"]
+[gd_scene load_steps=5 format=3 uid="uid://bfj6hso5vxxoo"]
 
 [ext_resource type="Script" path="res://Main/Menu/Menu.gd" id="1_63ccg"]
+
+[sub_resource type="Animation" id="Animation_4sl0r"]
+resource_name = "Boing"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:scale")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0.3, 0.8, 1),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(1.576, 1.576), Vector2(1, 1)]
+}
+tracks/1/type = "method"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"values": [{
+"args": [false],
+"method": &"PauseGame"
+}, {
+"args": [true],
+"method": &"PauseGame"
+}, {
+"args": [],
+"method": &"hide"
+}, {
+"args": [],
+"method": &"show"
+}]
+}
+
+[sub_resource type="Animation" id="Animation_ysye6"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_kv0oq"]
+_data = {
+"Boing": SubResource("Animation_4sl0r"),
+"RESET": SubResource("Animation_ysye6")
+}
 
 [node name="Menu" type="PanelContainer"]
 process_mode = 3
@@ -15,6 +74,7 @@ offset_right = 138.0
 offset_bottom = 88.0
 grow_horizontal = 2
 grow_vertical = 2
+pivot_offset = Vector2(138, 88)
 script = ExtResource("1_63ccg")
 
 [node name="VBox" type="VBoxContainer" parent="."]
@@ -33,3 +93,8 @@ text = "Options"
 [node name="QuitButton" type="Button" parent="VBox"]
 layout_mode = 2
 text = "Quit"
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_kv0oq")
+}

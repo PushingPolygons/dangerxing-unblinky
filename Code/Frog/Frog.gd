@@ -16,7 +16,7 @@ var stride_length: float = 1.0
 
 var is_dead: bool = true
 var vessel: Vessel = null
-var seat_offset: Vector3 = Vector3.ZERO
+#var seat_offset: Vector3 = Vector3.ZERO
 
 
 func _ready():
@@ -28,9 +28,7 @@ func _ready():
 
 
 
-func _physics_process(delta):
-		
-	
+func _process(delta):
 	if current_position != target_position:
 		weight += speed * delta
 		if weight >= 1.0:
@@ -38,50 +36,50 @@ func _physics_process(delta):
 			current_position = target_position
 		
 		position = lerp(current_position, target_position, weight)
+		print("Lerping")
 	else:
-		
-		#if vessel != null:
-			#global_position = vessel.global_position + seat_offset
-
-			#position = lerp(current_position, target_position, weight)
-		
 		if graphics.visible:
 			if Input.is_action_just_pressed("move_left"):
 				graphics.rotation_degrees.y = 90.0
-				if vessel != null:
-					seat_offset.x -= 1.0
-					current_position = global_position
-					target_position = current_position + Vector3.LEFT
-				else:
-					target_position.x -= stride_length
-					weight = 0.0
+				#if vessel != null:
+					#seat_offset.x -= 1.0
+					#current_position = global_position
+					#target_position = current_position + Vector3.LEFT
+				#else:
+					#target_position.x -= stride_length
+					#weight = 0.0
 			
 			if Input.is_action_just_pressed("move_right"):
 				graphics.rotation_degrees.y = -90.0
-				
-				if vessel != null:
-					seat_offset.x += 1.0
-				else:
-					target_position.x += stride_length
-					weight = 0.0
+				#
+				#if vessel != null:
+					#seat_offset.x += 1.0
+				#else:
+					#target_position.x += stride_length
+					#weight = 0.0
 			
 			if Input.is_action_just_pressed("move_fore"):
 				graphics.rotation_degrees.y = 0.0
 
 				if vessel != null:
-					global_position = vessel.global_position
-					current_position = global_position.round()
-					target_position = current_position + Vector3.FORWARD
-					vessel = null
+					#global_position = vessel.global_position
+					self.call_deferred("reparent", main, true)
 					weight = 0.0
+					vessel = null
 				else:
 					target_position.z -= stride_length
 					weight = 0.0
 			
 			if Input.is_action_just_pressed("move_back"):
-				target_position.z += stride_length
-				graphics.rotation_degrees.y = 180.0
-				weight = 0.0
+				if vessel != null:
+					self.call_deferred("reparent", main, true)
+					#global_position = vessel.global_position
+					weight = 0.0
+					vessel = null
+				else:
+					target_position.z += stride_length
+					graphics.rotation_degrees.y = 180.0
+					weight = 0.0
 		#else:
 			# Turn the frog back on after reset.
 			#graphics.show()
@@ -100,7 +98,6 @@ func Die():
 
 
 func OnAreaEntered(area):
-	
 	if area is Nest:
 		if area.is_occupied == false:
 			area.SetOccupied(true)
@@ -118,19 +115,22 @@ func OnAreaEntered(area):
 	
 	if area is Vessel:
 		vessel = area
-		#call_deferred_thread_group("reparent", area)
 		#reparent(area, true)
-		self.call_deferred("reparent", area, true)
+		self.call_deferred("reparent", area, false)
+		call_deferred("Reposition")
 		#seat_offset.x = floorf(global_position.distance_to(area.global_position))
-		#print("Riding the log!!: ", seat_offset)
-	elif area is Vehicle:
-		Die()
-		print("Hit by a car.")
+		print("Riding the log!!: ")
+	#elif area is Vehicle:
+		#Die()
+		#print("Hit by a car.")
 
+func Reposition():
+	position = Vector3(0, 10, 0)
 
 func OnAreaExited(area):
-	if area is Vessel:
-		vessel = null
-		current_position = global_position
-		target_position = global_position
-		print("Jumped off log.")
+	#if area is Vessel:
+		#vessel = null
+		##current_position = global_position
+		##target_position = global_position
+		#print("Jumped off log.")
+		pass

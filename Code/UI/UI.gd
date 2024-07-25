@@ -38,7 +38,7 @@ func _process(delta):
 		if life_span <= 0:
 			frog.Die()
 			#main.GameOver()
-		print("life_span: ", life_span)
+		#print("life_span: ", life_span)
 	
 	if Input.is_action_just_pressed("spawn_frog"):
 		if frog.is_dead:

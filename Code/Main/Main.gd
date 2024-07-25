@@ -1,12 +1,10 @@
 extends Node
 class_name Main
 
-
 @onready var ui = $UI
 @onready var menu = $Menu
 @onready var nests: Array[Nest] = [$Nests/Nest1, $Nests/Nest2, $Nests/Nest3, $Nests/Nest4, $Nests/Nest5]
 @onready var frog = $Frog
-
 
 
 func _ready():

@@ -1,6 +1,6 @@
 extends Area3D
 class_name Lane
 
-var speed_limit: float = 5.0
+@export var speed_limit: float = 5.0
 
 
