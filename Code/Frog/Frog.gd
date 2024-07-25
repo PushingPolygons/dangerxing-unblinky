@@ -40,10 +40,10 @@ func _physics_process(delta):
 		position = lerp(current_position, target_position, weight)
 	else:
 		
-		if vessel != null:
-			global_position = vessel.global_position + seat_offset
+		#if vessel != null:
+			#global_position = vessel.global_position + seat_offset
 
-			position = lerp(current_position, target_position, weight)
+			#position = lerp(current_position, target_position, weight)
 		
 		if graphics.visible:
 			if Input.is_action_just_pressed("move_left"):
@@ -67,7 +67,7 @@ func _physics_process(delta):
 			
 			if Input.is_action_just_pressed("move_fore"):
 				graphics.rotation_degrees.y = 0.0
-				
+
 				if vessel != null:
 					global_position = vessel.global_position
 					current_position = global_position.round()
@@ -118,8 +118,11 @@ func OnAreaEntered(area):
 	
 	if area is Vessel:
 		vessel = area
-		seat_offset.x = floorf(global_position.distance_to(area.global_position))
-		print("Riding the log!!: ", seat_offset)
+		#call_deferred_thread_group("reparent", area)
+		#reparent(area, true)
+		self.call_deferred("reparent", area, true)
+		#seat_offset.x = floorf(global_position.distance_to(area.global_position))
+		#print("Riding the log!!: ", seat_offset)
 	elif area is Vehicle:
 		Die()
 		print("Hit by a car.")
