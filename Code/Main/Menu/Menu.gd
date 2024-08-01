@@ -31,10 +31,9 @@ func _process(delta):
 
 
 func OnPlayPressed():
-
-	animation_player.play("Boing", -1, 3.3, false)
 	get_tree().paused = false
 	main.Play()
+	animation_player.play("Boing", -1, -3.3, false) # HACK: Not animating.
 
 
 func OnQuitPressed():

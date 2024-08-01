@@ -9,80 +9,67 @@ class_name Frog
 var main: Main
 var ui: UI
 
+var stride_length: float = 1.0
+var dead_speed: float = 0.3
+
 var current_position: Vector3
 var target_position: Vector3
 var weight: float = 0.0
-var stride_length: float = 1.0
 
 var is_dead: bool = true
 var vessel: Vessel = null
-#var seat_offset: Vector3 = Vector3.ZERO
+var seat_offset: Vector3 = Vector3.ZERO
 
 
 func _ready():
 	area_entered.connect(OnAreaEntered)
-	area_exited.connect(OnAreaExited)
-	current_position = Vector3(0.0, 0.0, 0.0)
+	#area_exited.connect(OnAreaExited)
+	current_position = position
+	target_position = position
 	graphics.hide()
 
 
 
-
 func _process(delta):
-	if current_position != target_position:
-		weight += speed * delta
-		if weight >= 1.0:
-			weight = 1.0
-			current_position = target_position
-		
+	if weight < 1.0:
+		if vessel != null:
+			target_position = vessel.global_position # TODO: Offset?
+			
+		if not is_dead:
+			weight += delta / stride_length
+		else:
+			weight += delta / dead_speed
 		position = lerp(current_position, target_position, weight)
-		print("Lerping")
+		
+		if weight >= 1.0:
+			current_position = target_position
+			graphics.show()
+	
 	else:
 		if graphics.visible:
+			if vessel != null:
+				position = vessel.global_position # TODO: + seat_offset
+				
 			if Input.is_action_just_pressed("move_left"):
 				graphics.rotation_degrees.y = 90.0
-				#if vessel != null:
-					#seat_offset.x -= 1.0
-					#current_position = global_position
-					#target_position = current_position + Vector3.LEFT
-				#else:
-					#target_position.x -= stride_length
-					#weight = 0.0
+				target_position = current_position + Vector3.LEFT
+				weight = 0.0
 			
 			if Input.is_action_just_pressed("move_right"):
 				graphics.rotation_degrees.y = -90.0
-				#
-				#if vessel != null:
-					#seat_offset.x += 1.0
-				#else:
-					#target_position.x += stride_length
-					#weight = 0.0
+				target_position = current_position + Vector3.RIGHT
+				weight = 0.0
 			
 			if Input.is_action_just_pressed("move_fore"):
 				graphics.rotation_degrees.y = 0.0
+				target_position = current_position + Vector3.FORWARD
+				weight = 0.0
 
-				if vessel != null:
-					#global_position = vessel.global_position
-					self.call_deferred("reparent", main, true)
-					weight = 0.0
-					vessel = null
-				else:
-					target_position.z -= stride_length
-					weight = 0.0
 			
 			if Input.is_action_just_pressed("move_back"):
-				if vessel != null:
-					self.call_deferred("reparent", main, true)
-					#global_position = vessel.global_position
-					weight = 0.0
-					vessel = null
-				else:
-					target_position.z += stride_length
-					graphics.rotation_degrees.y = 180.0
-					weight = 0.0
-		#else:
-			# Turn the frog back on after reset.
-			#graphics.show()
+				graphics.rotation_degrees.y = 180.0
+				target_position = current_position + Vector3.BACK
+				weight = 0.0
 
 
 func Rez():
