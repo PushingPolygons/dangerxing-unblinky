@@ -53,7 +53,9 @@ func _process(delta):
 				graphics.rotation_degrees.y = 90.0
 				if vessel != null:
 					seat_offset += Vector3.LEFT
-					print("Offset:", seat_offset)
+					if seat_offset.x < 0.0:
+						Die()
+						print("Offset:", seat_offset)
 				else:
 					target_position = current_position + Vector3.LEFT
 				weight = 0.0
@@ -62,6 +64,8 @@ func _process(delta):
 				graphics.rotation_degrees.y = -90.0
 				if vessel != null:
 					seat_offset += Vector3.RIGHT
+					if seat_offset.x > vessel.seat_count - 1:
+						Die()
 					print("Offset:", seat_offset)
 				else:
 					target_position = current_position + Vector3.RIGHT
@@ -89,29 +93,35 @@ func Die():
 
 
 func OnAreaEntered(area):
-	if area is Nest:
-		if area.is_occupied == false:
-			area.SetOccupied(true)
-			#area.is_occupied = true
-			print("Roosting!!!!")
-			target_position = Vector3.ZERO
-			graphics.hide()
-		main.IsGameOver()
-	
-	if area is Lane:
-		ui.UpdateScore(10)
-	#if area is River and vessel == null:
-		#Die()
-		#print("Drowned in river.")
-	
-	if area is Vessel:
-		vessel = area
-		seat_offset.x = round(global_position.x - area.global_position.x)
-		print("Offset:", seat_offset)
-		print("Riding the log!!")
-	#elif area is Vehicle:
-		#Die()
-		#print("Hit by a car.")
+	if not is_dead:
+		
+		if area is Nest:
+			if area.is_occupied == false:
+				area.SetOccupied(true)
+				#area.is_occupied = true
+				print("Roosting!!!!")
+				target_position = Vector3.ZERO
+				graphics.hide()
+			main.IsGameOver()
+		
+		if area is Lane:
+			ui.UpdateScore(10)
+		
+		if area is River:
+			print("Splash")
+			if vessel == null:
+				Die()
+				print("Drowned in river.")
+		
+		if area is Vessel:
+			vessel = area
+			seat_offset.x = round(global_position.x - area.global_position.x)
+			seat_offset.x = clamp(seat_offset.x, 0.0, vessel.seat_count - 1)
+			print("Offset:", seat_offset)
+			print("Riding the log!!")
+		#elif area is Vehicle:
+			#Die()
+			#print("Hit by a car.")
 
 func Reposition():
 	position = Vector3(0, 10, 0)
