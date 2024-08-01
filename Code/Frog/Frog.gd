@@ -9,8 +9,8 @@ class_name Frog
 var main: Main
 var ui: UI
 
-var stride_length: float = 1.0
-var dead_speed: float = 0.3
+var stride_pan: float = 0.15 # unit?
+var dead_pan: float = 2.3
 
 var current_position: Vector3
 var target_position: Vector3
@@ -34,14 +34,14 @@ func _process(delta):
 			target_position = vessel.global_position + seat_offset
 			
 		if not is_dead:
-			weight += delta / stride_length
+			weight += delta / stride_pan
 		else:
-			weight += delta / dead_speed
+			weight += delta / dead_pan
 		position = lerp(current_position, target_position, weight)
 		
 		if weight >= 1.0:
 			current_position = target_position
-			graphics.show()
+			#graphics.show()
 	
 	else:
 		if graphics.visible:
@@ -54,6 +54,7 @@ func _process(delta):
 				if vessel != null:
 					seat_offset += Vector3.LEFT
 					if seat_offset.x < 0.0:
+						vessel = null
 						Die()
 						print("Offset:", seat_offset)
 				else:
@@ -65,6 +66,7 @@ func _process(delta):
 				if vessel != null:
 					seat_offset += Vector3.RIGHT
 					if seat_offset.x > vessel.seat_count - 1:
+						vessel = null
 						Die()
 					print("Offset:", seat_offset)
 				else:
@@ -85,11 +87,18 @@ func _process(delta):
 				weight = 0.0
 
 
+func Rez():
+	graphics.show() # HACK: What else do we need.
+	is_dead = false
+
+
 func Die():
 	main.IsGameOver()
 	is_dead = true
 	graphics.hide()
+	current_position = position
 	target_position = Vector3.ZERO
+	dead_pan = stride_pan * current_position.distance_to(target_position)
 
 
 func OnAreaEntered(area):
@@ -122,9 +131,9 @@ func OnAreaEntered(area):
 		#elif area is Vehicle:
 			#Die()
 			#print("Hit by a car.")
-
-func Reposition():
-	position = Vector3(0, 10, 0)
+#
+#func Reposition():
+	#position = Vector3(0, 10, 0)
 
 func OnAreaExited(area):
 	#if area is Vessel:
