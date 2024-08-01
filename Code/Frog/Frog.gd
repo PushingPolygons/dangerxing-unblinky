@@ -23,17 +23,15 @@ var seat_offset: Vector3 = Vector3.ZERO
 
 func _ready():
 	area_entered.connect(OnAreaEntered)
-	#area_exited.connect(OnAreaExited)
-	current_position = position
 	target_position = position
+	current_position = target_position
 	graphics.hide()
-
 
 
 func _process(delta):
 	if weight < 1.0:
 		if vessel != null:
-			target_position = vessel.global_position # TODO: Offset?
+			target_position = vessel.global_position + seat_offset
 			
 		if not is_dead:
 			weight += delta / stride_length
@@ -48,33 +46,39 @@ func _process(delta):
 	else:
 		if graphics.visible:
 			if vessel != null:
-				position = vessel.global_position # TODO: + seat_offset
-				
+				position = vessel.global_position + seat_offset
+				current_position = position
+			
 			if Input.is_action_just_pressed("move_left"):
 				graphics.rotation_degrees.y = 90.0
-				target_position = current_position + Vector3.LEFT
+				if vessel != null:
+					seat_offset += Vector3.LEFT
+					print("Offset:", seat_offset)
+				else:
+					target_position = current_position + Vector3.LEFT
 				weight = 0.0
 			
 			if Input.is_action_just_pressed("move_right"):
 				graphics.rotation_degrees.y = -90.0
-				target_position = current_position + Vector3.RIGHT
+				if vessel != null:
+					seat_offset += Vector3.RIGHT
+					print("Offset:", seat_offset)
+				else:
+					target_position = current_position + Vector3.RIGHT
 				weight = 0.0
 			
 			if Input.is_action_just_pressed("move_fore"):
+				vessel = null
 				graphics.rotation_degrees.y = 0.0
-				target_position = current_position + Vector3.FORWARD
+				target_position = round(current_position + Vector3.FORWARD)
 				weight = 0.0
 
 			
 			if Input.is_action_just_pressed("move_back"):
+				vessel = null
 				graphics.rotation_degrees.y = 180.0
-				target_position = current_position + Vector3.BACK
+				target_position = round(current_position + Vector3.BACK)
 				weight = 0.0
-
-
-func Rez():
-	is_dead = false
-	graphics.show()
 
 
 func Die():
@@ -102,11 +106,9 @@ func OnAreaEntered(area):
 	
 	if area is Vessel:
 		vessel = area
-		#reparent(area, true)
-		self.call_deferred("reparent", area, false)
-		call_deferred("Reposition")
-		#seat_offset.x = floorf(global_position.distance_to(area.global_position))
-		print("Riding the log!!: ")
+		seat_offset.x = round(global_position.x - area.global_position.x)
+		print("Offset:", seat_offset)
+		print("Riding the log!!")
 	#elif area is Vehicle:
 		#Die()
 		#print("Hit by a car.")
