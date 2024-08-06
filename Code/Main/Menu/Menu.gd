@@ -21,11 +21,13 @@ func _ready():
 	quit_button.pressed.connect(OnQuitPressed)
 	
 	main = get_parent()
+	replay_button.hide()
 	animation_player.play("Boing", -1, 3.3, false)
 
 
 func _process(delta):
 	if Input.is_action_just_pressed("pause"):
+		message.text = "Paused"
 		if not visible:
 			get_tree().paused = true
 			animation_player.play("Boing", -1, 3.3, false)
@@ -34,16 +36,15 @@ func _process(delta):
 			animation_player.play("Boing", -1, -3.3, true)
 
 
-func Show(new_message: String):
-	show()
+func Open(new_message: String):
+	self.show()
 	animation_player.play("Boing", -1, 3.3, false)
 	message.text = new_message
 
 
 func OnPlayPressed():
 	get_tree().paused = false
-	main.Play()
-	animation_player.play("Boing", -1, -3.3, false) # HACK: Not animating.
+	animation_player.play("Boing", -1, -3.3, true)
 
 
 func OnReplayPressed():

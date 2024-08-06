@@ -17,6 +17,8 @@ size = Vector3(0.2, 0.2, 0.2)
 [node name="Frog" type="Area3D"]
 script = ExtResource("1_uskmt")
 
+[node name="UI" parent="." instance=ExtResource("2_1u8kl")]
+
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.915994, 0.0220944)
 shape = SubResource("BoxShape3D_71euq")
@@ -44,5 +46,3 @@ transform = Transform3D(0.985529, -0.142036, 0.0925072, 0, 0.545751, 0.837947, -
 
 [node name="Camera" type="Camera3D" parent="Rig"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 8)
-
-[node name="UI" parent="." instance=ExtResource("2_1u8kl")]

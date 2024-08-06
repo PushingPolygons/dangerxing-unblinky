@@ -2,21 +2,21 @@ extends Area3D
 class_name Frog
 
 @onready var graphics = $Graphics
+@onready var ui = $UI
 
 @export var speed: float = 4.0 # m/s.
 #@export var reset_speed: float = 0.5
 
 var main: Main
-var ui: UI
 
-var stride_pan: float = 0.15 # unit?
-var dead_pan: float = 2.3
+const stride_pan: float = 0.15 # unit?
+const dead_pan: float = 2.3
 
 var current_position: Vector3
 var target_position: Vector3
 var weight: float = 0.0
 
-var is_dead: bool = true
+var is_living: bool = false
 var vessel: Vessel = null
 var seat_offset: Vector3 = Vector3.ZERO
 var use_stride_pan: bool = false
@@ -56,7 +56,7 @@ func _process(delta):
 					seat_offset += Vector3.LEFT
 					if seat_offset.x < 0.0:
 						vessel = null
-						DeadOrAlive(true)
+						DeadOrAlive(ui)
 						print("Offset:", seat_offset)
 				else:
 					target_position = current_position + Vector3.LEFT
@@ -68,7 +68,7 @@ func _process(delta):
 					seat_offset += Vector3.RIGHT
 					if seat_offset.x > vessel.seat_count - 1:
 						vessel = null
-						DeadOrAlive(true)
+						DeadOrAlive(ui)
 					print("Offset:", seat_offset)
 				else:
 					target_position = current_position + Vector3.RIGHT
@@ -90,15 +90,15 @@ func _process(delta):
 
 func Rez():
 	graphics.show()
-	is_dead = false
+	is_living = true
 	use_stride_pan = true
 
 
-func DeadOrAlive(is_dead: bool):
-	self.is_dead = is_dead
-	use_stride_pan = false
-	dead_pan = stride_pan * current_position.distance_to(target_position)
-	main.IsGameOver()
+func DeadOrAlive(new_living: bool):
+	use_stride_pan = new_living
+	
+	#dead_pan = stride_pan * current_position.distance_to(target_position)
+	main.IsGameOver(ui)
 	graphics.hide()
 	current_position = position
 	target_position = Vector3.ZERO
@@ -107,13 +107,13 @@ func DeadOrAlive(is_dead: bool):
 
 
 func OnAreaEntered(area):
-	if not is_dead:
+	if graphics.visible:
 		
 		if area is Nest:
 			if area.is_occupied == false:
 				area.SetOccupied(true)
 				print("Roosting!!!!")
-				DeadOrAlive(false)
+				DeadOrAlive(true)
 		
 		if area is Lane:
 			ui.UpdateScore(10)
@@ -121,7 +121,7 @@ func OnAreaEntered(area):
 		if area is River:
 			print("Splash")
 			if vessel == null:
-				DeadOrAlive(true)
+				DeadOrAlive(false)
 				print("Drowned in river.")
 		
 		if area is Vessel:
@@ -131,5 +131,5 @@ func OnAreaEntered(area):
 			print("Offset:", seat_offset)
 			print("Riding the log!!")
 		elif area is Vehicle:
-			DeadOrAlive(true)
+			DeadOrAlive(false)
 			print("Hit by a car.")

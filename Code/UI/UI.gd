@@ -20,9 +20,7 @@ var life_span: float = MAX_LIFE_SPAN # seconds.
 
 
 func _ready():
-	hide()
-	# FIXME: Found a bug.
-	# HACK: Max life span workaround.
+	#hide()
 	progress_bar.max_value = MAX_LIFE_SPAN
 	progress_bar.value = MAX_LIFE_SPAN
 	Tools.DeleteChildren(lives_ui)
@@ -31,17 +29,17 @@ func _ready():
 
 
 func _process(delta):
-	if not frog.is_dead and drain_life:
+	if not frog.is_living and drain_life:
 		life_span -= delta
 		progress_bar.value = life_span
 		# TODO: How do I scale these numbers?
 		if life_span <= 0:
-			frog.DeadOrAlive(true)
+			frog.DeadOrAlive(false)
 
 	
 	if Input.is_action_just_pressed("spawn_frog"):
 		if frog.weight >= 1.0 and frog.graphics.visible == false:
-			if frog.is_dead:
+			if not frog.is_living:
 				UpdateLives(-1)
 			
 			frog.Rez()
@@ -63,14 +61,11 @@ func UpdateScore(delta_score: int):
 
 func UpdateLives(delta_lives):
 	lives += delta_lives
-	if lives < 0 and frog.is_dead:
-		main.GameOver()
-	else:
-		Tools.DeleteChildren(lives_ui)
-		for i in lives:
-			SpawnLife()
+	Tools.DeleteChildren(lives_ui)
+	for life in lives:
+		SpawnLifeIcon()
 
 
-func SpawnLife():
-	var life = LIFE.instantiate()
-	lives_ui.add_child(life)
+func SpawnLifeIcon():
+	var life_icon = LIFE.instantiate()
+	lives_ui.add_child(life_icon)
