@@ -99,6 +99,8 @@ func Die():
 	current_position = position
 	target_position = Vector3.ZERO
 	dead_pan = stride_pan * current_position.distance_to(target_position)
+	weight = 0.0
+	ui.progress_bar.value = 0.0
 
 
 func OnAreaEntered(area):
@@ -128,9 +130,9 @@ func OnAreaEntered(area):
 			seat_offset.x = clamp(seat_offset.x, 0.0, vessel.seat_count - 1)
 			print("Offset:", seat_offset)
 			print("Riding the log!!")
-		#elif area is Vehicle:
-			#Die()
-			#print("Hit by a car.")
+		elif area is Vehicle:
+			Die()
+			print("Hit by a car.")
 #
 #func Reposition():
 	#position = Vector3(0, 10, 0)

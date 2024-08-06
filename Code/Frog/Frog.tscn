@@ -3,7 +3,7 @@
 [ext_resource type="Script" path="res://Frog/Frog.gd" id="1_uskmt"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_71euq"]
-size = Vector3(0.6, 0.6, 0.6)
+size = Vector3(0.6, 2.86543, 0.6)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_sqn0n"]
 albedo_color = Color(5.53504e-07, 0.52613, 0.355498, 1)
@@ -17,7 +17,7 @@ size = Vector3(0.2, 0.2, 0.2)
 script = ExtResource("1_uskmt")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.216721, 0.0220944)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.915994, 0.0220944)
 shape = SubResource("BoxShape3D_71euq")
 
 [node name="Graphics" type="Node3D" parent="."]

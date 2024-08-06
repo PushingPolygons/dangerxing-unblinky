@@ -16,10 +16,6 @@ func Play():
 	ui.show()
 
 
-#func RezFrog():
-	#frog.Rez()
-
-
 func GameOver():
 	menu.show()
 
