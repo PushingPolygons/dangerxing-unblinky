@@ -16,15 +16,21 @@ func Play():
 	ui.show()
 
 
-func GameOver():
-	menu.show()
-
-
 func IsGameOver():
+	
+	# TODO: Make game end.
+	# Losing condition.
+	if ui.lives <= 0:
+		print("UI.lives: ", ui.lives)
+		menu.Show("You stink loser!")
+		ui.hide()
+		return
+	
+	# Win Condition.
 	for nest: Nest in nests:
-		#print(nest.is_occupied)
 		if not nest.is_occupied:
 			return
-	menu.show()
-	# TODO: Retart? Success / failure.
+	menu.Show("Congradulations loser!")
+	ui.hide()
+	
 

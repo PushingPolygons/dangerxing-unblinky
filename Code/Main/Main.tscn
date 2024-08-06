@@ -1,26 +1,25 @@
-[gd_scene load_steps=15 format=3 uid="uid://cocntdx7uikor"]
+[gd_scene load_steps=14 format=3 uid="uid://cocntdx7uikor"]
 
 [ext_resource type="PackedScene" uid="uid://dd3dm305m8uwx" path="res://Frog/Frog.tscn" id="1_0wvwd"]
 [ext_resource type="Script" path="res://Main/Main.gd" id="1_uirpq"]
 [ext_resource type="PackedScene" uid="uid://bfj6hso5vxxoo" path="res://Main/Menu/Menu.tscn" id="2_gwrug"]
 [ext_resource type="PackedScene" uid="uid://2u4b2vx1erhe" path="res://Lane/Lane.tscn" id="2_hyfrk"]
 [ext_resource type="PackedScene" uid="uid://da4837w5e71nh" path="res://Vehicle/Vehicle.tscn" id="2_ri2qc"]
-[ext_resource type="PackedScene" uid="uid://b167boqjwobsh" path="res://UI/UI.tscn" id="3_oq0g5"]
 [ext_resource type="PackedScene" uid="uid://ctv4dx4gjufbf" path="res://Nest/Nest.tscn" id="4_ljbhj"]
 [ext_resource type="PackedScene" uid="uid://dh150y0dwalu8" path="res://River/River.tscn" id="5_7gsh6"]
 [ext_resource type="PackedScene" uid="uid://bf762pqmo2hau" path="res://Vessel/Vessel.tscn" id="6_aj5df"]
 
-[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_70a5e"]
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_0v6h2"]
 sky_top_color = Color(0.61705, 0.389747, 0.133266, 1)
 sky_horizon_color = Color(0.704262, 0.639687, 0.566566, 1)
 ground_horizon_color = Color(0.704262, 0.639687, 0.566566, 1)
 
-[sub_resource type="Sky" id="Sky_clyx4"]
-sky_material = SubResource("ProceduralSkyMaterial_70a5e")
+[sub_resource type="Sky" id="Sky_f68fk"]
+sky_material = SubResource("ProceduralSkyMaterial_0v6h2")
 
-[sub_resource type="Environment" id="Environment_us8yg"]
+[sub_resource type="Environment" id="Environment_8sn2a"]
 background_mode = 2
-sky = SubResource("Sky_clyx4")
+sky = SubResource("Sky_f68fk")
 tonemap_mode = 2
 glow_enabled = true
 
@@ -32,19 +31,17 @@ albedo_color = Color(0.0985202, 0.264006, 0.127816, 1)
 [node name="Main" type="Node"]
 script = ExtResource("1_uirpq")
 
-[node name="Menu" parent="." instance=ExtResource("2_gwrug")]
-
-[node name="UI" parent="." instance=ExtResource("3_oq0g5")]
-
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
-environment = SubResource("Environment_us8yg")
+environment = SubResource("Environment_8sn2a")
+
+[node name="Menu" parent="." instance=ExtResource("2_gwrug")]
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(-0.866023, -0.433016, 0.250001, 0, 0.499998, 0.866027, -0.500003, 0.749999, -0.43301, 3.97499, 14.2464, 0)
 shadow_enabled = true
 
 [node name="Nests" type="Node3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -5)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 3)
 
 [node name="Nest1" parent="Nests" instance=ExtResource("4_ljbhj")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6, 0, -4)

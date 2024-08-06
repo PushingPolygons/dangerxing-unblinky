@@ -36,16 +36,18 @@ func _process(delta):
 		progress_bar.value = life_span
 		# TODO: How do I scale these numbers?
 		if life_span <= 0:
-			frog.Die()
-			#main.GameOver()
-		#print("life_span: ", life_span)
+			frog.DeadOrAlive(true)
+
 	
 	if Input.is_action_just_pressed("spawn_frog"):
-		if frog.is_dead:
-			UpdateLives(-1)
+		if frog.weight >= 1.0 and frog.graphics.visible == false:
+			if frog.is_dead:
+				UpdateLives(-1)
+			
 			frog.Rez()
 			life_span = MAX_LIFE_SPAN
 			progress_bar.value = MAX_LIFE_SPAN
+			print("Spawn frog: -1 life? ", lives)
 
 
 func Initialize(main: Main, frog: Frog):
@@ -67,7 +69,6 @@ func UpdateLives(delta_lives):
 		Tools.DeleteChildren(lives_ui)
 		for i in lives:
 			SpawnLife()
-		print(lives)
 
 
 func SpawnLife():

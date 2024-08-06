@@ -19,6 +19,7 @@ var weight: float = 0.0
 var is_dead: bool = true
 var vessel: Vessel = null
 var seat_offset: Vector3 = Vector3.ZERO
+var use_stride_pan: bool = false
 
 
 func _ready():
@@ -33,7 +34,7 @@ func _process(delta):
 		if vessel != null:
 			target_position = vessel.global_position + seat_offset
 			
-		if not is_dead:
+		if use_stride_pan:
 			weight += delta / stride_pan
 		else:
 			weight += delta / dead_pan
@@ -55,7 +56,7 @@ func _process(delta):
 					seat_offset += Vector3.LEFT
 					if seat_offset.x < 0.0:
 						vessel = null
-						Die()
+						DeadOrAlive(true)
 						print("Offset:", seat_offset)
 				else:
 					target_position = current_position + Vector3.LEFT
@@ -67,7 +68,7 @@ func _process(delta):
 					seat_offset += Vector3.RIGHT
 					if seat_offset.x > vessel.seat_count - 1:
 						vessel = null
-						Die()
+						DeadOrAlive(true)
 					print("Offset:", seat_offset)
 				else:
 					target_position = current_position + Vector3.RIGHT
@@ -88,17 +89,19 @@ func _process(delta):
 
 
 func Rez():
-	graphics.show() # HACK: What else do we need.
+	graphics.show()
 	is_dead = false
+	use_stride_pan = true
 
 
-func Die():
+func DeadOrAlive(is_dead: bool):
+	self.is_dead = is_dead
+	use_stride_pan = false
+	dead_pan = stride_pan * current_position.distance_to(target_position)
 	main.IsGameOver()
-	is_dead = true
 	graphics.hide()
 	current_position = position
 	target_position = Vector3.ZERO
-	dead_pan = stride_pan * current_position.distance_to(target_position)
 	weight = 0.0
 	ui.progress_bar.value = 0.0
 
@@ -109,11 +112,8 @@ func OnAreaEntered(area):
 		if area is Nest:
 			if area.is_occupied == false:
 				area.SetOccupied(true)
-				#area.is_occupied = true
 				print("Roosting!!!!")
-				target_position = Vector3.ZERO
-				graphics.hide()
-			main.IsGameOver()
+				DeadOrAlive(false)
 		
 		if area is Lane:
 			ui.UpdateScore(10)
@@ -121,7 +121,7 @@ func OnAreaEntered(area):
 		if area is River:
 			print("Splash")
 			if vessel == null:
-				Die()
+				DeadOrAlive(true)
 				print("Drowned in river.")
 		
 		if area is Vessel:
@@ -131,16 +131,5 @@ func OnAreaEntered(area):
 			print("Offset:", seat_offset)
 			print("Riding the log!!")
 		elif area is Vehicle:
-			Die()
+			DeadOrAlive(true)
 			print("Hit by a car.")
-#
-#func Reposition():
-	#position = Vector3(0, 10, 0)
-
-func OnAreaExited(area):
-	#if area is Vessel:
-		#vessel = null
-		##current_position = global_position
-		##target_position = global_position
-		#print("Jumped off log.")
-		pass

@@ -1,6 +1,10 @@
-[gd_scene load_steps=5 format=3 uid="uid://bfj6hso5vxxoo"]
+[gd_scene load_steps=6 format=3 uid="uid://bfj6hso5vxxoo"]
 
 [ext_resource type="Script" path="res://Main/Menu/Menu.gd" id="1_63ccg"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_07xkx"]
+font_size = 25
+font_color = Color(0.77316, 0.325636, 0.23957, 1)
 
 [sub_resource type="Animation" id="Animation_4sl0r"]
 resource_name = "Boing"
@@ -80,11 +84,23 @@ script = ExtResource("1_63ccg")
 [node name="VBox" type="VBoxContainer" parent="."]
 layout_mode = 2
 
+[node name="Message" type="Label" parent="VBox"]
+layout_mode = 2
+text = "Danger X-ing"
+label_settings = SubResource("LabelSettings_07xkx")
+horizontal_alignment = 1
+
 [node name="PlayButton" type="Button" parent="VBox"]
 layout_mode = 2
 size_flags_vertical = 3
 theme_override_font_sizes/font_size = 42
 text = "Play"
+
+[node name="ReplayButton" type="Button" parent="VBox"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_font_sizes/font_size = 42
+text = "RePlay"
 
 [node name="OptionsButton" type="Button" parent="VBox"]
 layout_mode = 2
